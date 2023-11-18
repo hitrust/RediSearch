@@ -14,11 +14,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      redis-latest: ${{ steps.redis-latest.outputs.tag }}
+    steps:
+      - id: redis-latest
+        run: echo "tag=$(curl -s https://api.github.com/repos/redis/redis/releases/latest |
+                         jq -r '.tag_name' )" >> $GITHUB_OUTPUT
+
   basic-test:
+    needs: setup
     uses: ./.github/workflows/task-test.yml
     with:
       env: ubuntu-latest
       test-config: QUICK=1
+      get-redis: ${{ needs.setup.outputs.redis-latest }}
     secrets: inherit
 
   coverage:
