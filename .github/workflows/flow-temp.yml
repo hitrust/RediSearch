@@ -5,12 +5,22 @@ on:
     branches-ignore: ['*'] # ignore all branches. Comment this line to run your workflow below on every push.
 
 jobs:
-  print-context:
+  get-latest:
+    uses: ./.github/workflows/task-get-latest-tag.yml
+    with:
+      repo: redis/redis
+
+  get-latest-6:
+    uses: ./.github/workflows/task-get-latest-tag.yml
+    with:
+      repo: redis/redis
+      prefix: 6 # Get latest version with major version 6
+
+  print:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        OS: [macos-11]
-        standalone: [true, true]
+    needs: [get-latest, get-latest-6]
     steps:
-      - run: |
-          echo "I'm ${{ matrix.OS }} standing alone: ${{ matrix.standalone }}"
+      - name: Print latest tag
+        run: echo "Latest tag is ${{ needs.get-latest.outputs.tag }}"
+      - name: Print latest tag with major version 6
+        run: echo "Latest tag with major version 6 is ${{ needs.get-latest-6.outputs.tag }}"
