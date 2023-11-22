@@ -8,7 +8,7 @@
 [![Forum](https://img.shields.io/badge/Forum-RediSearch-blue)](https://forum.redis.com/c/modules/redisearch/)
 [![Discord](https://img.shields.io/discord/697882427875393627?style=flat-square)](https://discord.gg/xTbqgTB)
 
-<img src="https://redis.io/docs/stack/search/img/logo.svg" alt="logo" width="300"/>
+<img src="https://raw.githubusercontent.com/RediSearch/redisearch-getting-started/master/docs/images/logo.svg" alt="logo" width="300"/>
 
 ## Overview
 
